@@ -1,0 +1,16 @@
+#!/usr/local/bin/pulseaudio -nF
+# JavaOS: звуковая служба PulseAudio. Звуковые карты компьютера + Bluetooth-наушники.
+# Подключили наушники — звук сам переходит в них (module-switch-on-connect).
+# ошибка одного модуля не должна оставлять систему совсем без звука
+.nofail
+load-module module-udev-detect
+load-module module-native-protocol-unix auth-anonymous=1 socket=/run/user/0/pulse/native
+# гарнитура (микрофон Bluetooth-наушников, HFP/HSP) — встроенная, без oFono. Наушники сами между «музыкой» (A2DP)
+# и гарнитурой не переключаются (auto_switch=0): при каждом переключении устройства пропадали и появлялись
+# под другим именем, и Discord терял весь список. Гарнитуру включают вручную (Параметры → Bluetooth)
+load-module module-bluetooth-policy auto_switch=0
+load-module module-bluetooth-discover headset=native
+load-module module-switch-on-connect
+load-module module-always-sink
+load-module module-default-device-restore
+load-module module-stream-restore

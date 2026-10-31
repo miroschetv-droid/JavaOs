@@ -1,0 +1,6 @@
+*.sh text eol=lf
+*.pa text eol=lf
+*.cfg text eol=lf
+jwmrc text eol=lf
+motd text eol=lf
+boot.msg binary
